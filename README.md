@@ -23,12 +23,12 @@ usage
 
             local conn = redis.new({host="127.0.0.1", port="6379", password="", index=0})
 
-            print(conn:Set("a","b",0):Val())
+            print(conn:Set("a", "b", 0):Val())
             print(conn:Get("a"):Val())
 
-            local keys = conn:Do("keys","*"):Val()
-            for k,v in keys() do
-                print(k,v)
+            local keys = conn:Do("keys", "*"):Val()
+            for k, v in keys() do
+                print(k, v)
             end
 
             print(conn:Do("expire", "a", "100"):Val())
@@ -46,6 +46,7 @@ usage
 
 API
 ===
-    this is a wrapper for go-redis/redis
 
-    refer to https://github.com/go-redis/redis
+this is a wrapper for go-redis/redis
+
+refer to https://github.com/go-redis/redis
