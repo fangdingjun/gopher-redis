@@ -24,22 +24,22 @@ type luaRedis struct {
 
 func newRedis(L *luar.LState) int {
 	opt := L.CheckTable(1)
-	host := string(L.RawGet(opt, lua.LString("host")).(lua.LString))
+	host := string(opt.RawGetString("host").(lua.LString))
 
 	port := "6379"
-	port1 := L.RawGet(opt, lua.LString("port"))
+	port1 := opt.RawGetString("port")
 	if port1.Type() == lua.LTString {
 		port = string(port1.(lua.LString))
 	}
 
 	passwd := ""
-	passwd1 := L.RawGet(opt, lua.LString("password"))
+	passwd1 := opt.RawGetString("password")
 	if passwd1.Type() == lua.LTString {
 		passwd = string(passwd1.(lua.LString))
 	}
 
 	db := 0
-	db1 := L.RawGet(opt, lua.LString("index"))
+	db1 := opt.RawGetString("index")
 	if db1.Type() == lua.LTNumber {
 		db = int(db1.(lua.LNumber))
 	}
