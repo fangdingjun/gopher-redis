@@ -7,6 +7,7 @@ a redis library for gopher-lua
 usage
 ======
 
+```go
     import (
         lua "github.com/yuin/gopher-lua"
         redis "github.com/fangdingjun/gopher-redis"
@@ -66,6 +67,7 @@ usage
             log.Fatal(err)
         }
     }
+```
 
 API
 ===
