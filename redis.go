@@ -37,26 +37,35 @@ func newRedis(L *lua.LState) int {
 	opt.ForEach(func(k, v lua.LValue) {
 		k1, ok := k.(lua.LString)
 		if !ok {
+			L.ArgError(1, "only string allowed in table index")
 			return
 		}
+
 		switch string(k1) {
 		case "host":
 			v1, ok := v.(lua.LString)
-			if ok {
-				host = string(v1)
+			if !ok {
+				L.ArgError(1, "string required for host")
+				return
 			}
+			host = string(v1)
 		case "port":
 			switch v1 := v.(type) {
 			case lua.LString:
 				port = string(v1)
 			case lua.LNumber:
 				port = fmt.Sprintf("%d", int64(v1))
+			default:
+				L.ArgError(1, "string or number required for port")
+				return
 			}
 		case "passwd":
 			v1, ok := v.(lua.LString)
-			if ok {
-				passwd = string(v1)
+			if !ok {
+				L.ArgError(1, "string required for passwd")
+				return
 			}
+			passwd = string(v1)
 		case "index":
 			switch v1 := v.(type) {
 			case lua.LString:
@@ -66,6 +75,9 @@ func newRedis(L *lua.LState) int {
 				}
 			case lua.LNumber:
 				db = int(v1)
+			default:
+				L.ArgError(1, "string or number required for index")
+				return
 			}
 		}
 	})
