@@ -66,7 +66,7 @@ func newRedis(L *lua.LState) int {
 				return
 			}
 			passwd = string(v1)
-		case "index":
+		case "index", "db":
 			switch v1 := v.(type) {
 			case lua.LString:
 				db1, err := strconv.Atoi(string(v1))
@@ -144,6 +144,10 @@ func doCmd(L *lua.LState) int {
 	log.Debugln(args...)
 	res, err := r.Do(args...).Result()
 	if err != nil {
+		if err == redis.Nil {
+			L.Push(lua.LNil)
+			return 1
+		}
 		L.Push(lua.LNil)
 		L.Push(lua.LString(err.Error()))
 		return 2
