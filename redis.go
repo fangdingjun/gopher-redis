@@ -59,7 +59,7 @@ func newRedis(L *lua.LState) int {
 				L.ArgError(1, "string or number required for port")
 				return
 			}
-		case "passwd":
+		case "passwd", "password", "pass":
 			v1, ok := v.(lua.LString)
 			if !ok {
 				L.ArgError(1, "string required for passwd")
